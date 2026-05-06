@@ -1,0 +1,551 @@
+{
+    "questions": [
+        {
+            "question": "Ein KI-System sortiert automatisch eingehende Support-Tickets nach Priorität.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein Chatbot informiert Nutzer darüber, dass sie mit einer KI sprechen.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": true
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI bewertet Bewerber automatisch für eine Stelle im öffentlichen Dienst.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": true
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine App analysiert Gesichtsausdrücke von Schülern, um deren Aufmerksamkeit im Unterricht zu bewerten.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": true
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein KI-Tool generiert automatisch Marketingtexte für Online-Shops.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI erstellt Deepfake-Videos für Werbezwecke und kennzeichnet diese klar als KI-generiert.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": true
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein KI-System entscheidet automatisiert über die Kreditwürdigkeit von Privatpersonen.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": true
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI erkennt Spam-Mails und verschiebt diese automatisch in einen separaten Ordner.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein Unternehmen nutzt KI zur Emotionserkennung bei Bewerbungsgesprächen.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": true
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI empfiehlt Musik basierend auf dem Hörverhalten der Nutzer.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein KI-Assistent beantwortet Kundenanfragen im Online-Banking.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": true
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI unterstützt Ärzte bei der Analyse von MRT-Bildern zur Krebsdiagnose.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": true
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein soziales Netzwerk verwendet KI, um Beiträge nach Relevanz zu sortieren.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein KI-System erstellt automatisch realistische Stimmen bekannter Politiker ohne Kennzeichnung.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": true
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI filtert automatisch Hintergrundgeräusche in Videokonferenzen.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein KI-gestütztes System entscheidet über die Vergabe von Sozialleistungen.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": true
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI simuliert Gespräche mit historischen Persönlichkeiten und weist auf die künstliche Generierung hin.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": true
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine Behörde nutzt KI zur biometrischen Echtzeit-Überwachung im öffentlichen Raum.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": true
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Ein Übersetzungstool verwendet KI zur automatischen Übersetzung von E-Mails.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": true
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": false
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        },
+        {
+            "question": "Eine KI bewertet Prüfungen von Schülern automatisch und entscheidet über das Bestehen.",
+            "options": [
+                {
+                    "value": "Minimales / Kein Risiko",
+                    "color": "#4DA72E",
+                    "correct": false
+                },
+                {
+                    "value": "Begrenztes Risiko",
+                    "color": "#FFBF00",
+                    "correct": false
+                },
+                {
+                    "value": "Hohes Risiko",
+                    "color": "#E97131",
+                    "correct": true
+                },
+                {
+                    "value": "Inakzeptables Risiko",
+                    "color": "#C00000",
+                    "correct": false
+                }
+            ],
+            "points": 1
+        }
+    ],
+    "scoring": [
+        {
+            "min": 0,
+            "max": 1,
+            "title": "KI-Interessierter",
+            "description": "Sie haben bereits erste Berührungspunkte mit der KI-Verordnung gesammelt. In unserer Schulung zeigen wir Ihnen praxisnah, wie KI-Systeme bewertet werden und worauf es wirklich ankommt.",
+            "color": "#C00000"
+        },
+        {
+            "min": 2,
+            "max": 3,
+            "title": "KI-Kenner",
+            "description": "Sie bringen schon ein gutes Verständnis für KI und Risikoklassen mit. In unserer Schulung vertiefen wir gemeinsam die Anforderungen der KI-Verordnung anhand konkreter Beispiele.",
+            "color": "#FFBF00"
+        },
+        {
+            "min": 4,
+            "max": 5,
+            "title": "AI-Act-Profi",
+            "description": "Stark! Sie haben ein sehr gutes Gespür für die Einordnung von KI-Systemen. Unsere Schulung hilft Ihnen dabei, dieses Wissen noch praxisnäher und sicher im Unternehmensalltag anzuwenden.",
+            "color": "#4DA72E"
+        }
+    ],
+    "timeLimit": 15,
+    "numberOfQuestions": 5,
+    "title": "Sind Sie bereit für die KI-Verordnung?",
+    "description": "Können Sie einschätzen, welche KI-Systeme riskant sind und welche nicht? Finden Sie es heraus und testen Sie Ihr Wissen zur KI-Verordnung der EU."
+}

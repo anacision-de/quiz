@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zuko Quiz</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="app" class="app">
+      <section id="intro" class="intro">
+        <div class="intro-content">
+          <h1 id="intro-title"></h1>
+          <p id="intro-description"></p>
+          <div class="intro-actions">
+            <button id="prepare-button" class="primary-button" type="button" disabled>Kamera vorbereiten</button>
+            <button id="start-button" class="primary-button secondary-button" type="button" disabled>Starten</button>
+          </div>
+          <p id="camera-note" class="status-text" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="quiz" class="quiz hidden" aria-live="polite">
+        <header class="question-panel">
+          <p id="progress" class="progress"></p>
+          <h2 id="question-text" class="question-text"></h2>
+          <div id="timer" class="timer" aria-label="Verbleibende Zeit">
+            <span id="timer-value">0s</span>
+          </div>
+        </header>
+
+        <section id="answers" class="answers" aria-label="Antwortbereiche"></section>
+
+        <video id="camera-video" class="camera-video" autoplay muted playsinline></video>
+        <canvas id="camera-overlay" class="camera-overlay"></canvas>
+        <canvas id="analysis-canvas" class="analysis-canvas"></canvas>
+
+        <div id="feedback" class="feedback hidden"></div>
+
+        <div class="top-actions">
+          <button id="recalibrate-button" class="icon-button" type="button" title="Person neu erfassen" aria-label="Person neu erfassen">
+            ↻
+          </button>
+        </div>
+      </section>
+
+      <section id="result" class="result hidden">
+        <div id="result-card" class="result-card">
+          <div class="result-copy">
+            <p id="result-score" class="result-score"></p>
+            <h2 id="result-title"></h2>
+            <p id="result-description"></p>
+            <button id="restart-button" class="primary-button" type="button">Nochmal spielen</button>
+          </div>
+          <img id="result-image" class="result-image" alt="Webcam Bild vom Ergebnis" />
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
