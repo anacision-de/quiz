@@ -3,33 +3,38 @@ import {
   AutoProcessor,
   RawImage,
   env,
-} from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js";
+} from "./vendor/transformers/transformers.min.js";
 
 const intro = document.querySelector("#intro");
 const quiz = document.querySelector("#quiz");
 const result = document.querySelector("#result");
 const introTitle = document.querySelector("#intro-title");
 const introDescription = document.querySelector("#intro-description");
+const introActions = document.querySelector("#intro-actions");
+const catalogLinks = document.querySelector("#catalog-links");
 const cameraNote = document.querySelector("#camera-note");
 const prepareButton = document.querySelector("#prepare-button");
 const startButton = document.querySelector("#start-button");
 const restartButton = document.querySelector("#restart-button");
-const recalibrateButton = document.querySelector("#recalibrate-button");
 const progress = document.querySelector("#progress");
 const questionText = document.querySelector("#question-text");
+const timer = document.querySelector("#timer");
 const timerValue = document.querySelector("#timer-value");
 const answers = document.querySelector("#answers");
 const feedback = document.querySelector("#feedback");
 const video = document.querySelector("#camera-video");
-const overlay = document.querySelector("#camera-overlay");
-const overlayContext = overlay.getContext("2d", { willReadFrequently: false });
 const analysisCanvas = document.querySelector("#analysis-canvas");
 const analysisContext = analysisCanvas.getContext("2d", { willReadFrequently: true });
 const resultCard = document.querySelector("#result-card");
 const resultScore = document.querySelector("#result-score");
 const resultTitle = document.querySelector("#result-title");
 const resultDescription = document.querySelector("#result-description");
-const resultImage = document.querySelector("#result-image");
+const certificateQr = document.querySelector("#certificate-qr");
+const certificateQrContext = certificateQr.getContext("2d");
+const certificateQrNote = document.querySelector("#certificate-qr-note");
+const certificateLink = document.querySelector("#certificate-link");
+const confettiCanvas = document.querySelector("#confetti-canvas");
+const confettiContext = confettiCanvas.getContext("2d");
 
 const state = {
   config: null,
@@ -44,37 +49,59 @@ const state = {
   poseReady: false,
   trackedPerson: null,
   timerId: null,
-  rafId: null,
   poseIntervalId: null,
+  poseLoopActive: false,
+  missedDetections: 0,
   feedbackId: null,
+  confettiRafId: null,
   remaining: 0,
+  timeLimit: 0,
   acceptingAnswers: false,
   manualFallback: false,
   setupReady: false,
   setupInProgress: false,
+  catalogId: null,
 };
 
 const MODEL_ID = "Xenova/RTMO-t";
-const ANALYSIS_WIDTH = 384;
-const ANALYSIS_HEIGHT = 216;
-const BOX_THRESHOLD = 0.28;
-const POINT_THRESHOLD = 0.28;
-const MIN_VISIBLE_KEYPOINTS = 5;
-const POSE_INTERVAL_MS = 360;
-const TRACK_SMOOTHING = 0.38;
+const CATALOG_MANIFEST_PATH = "catalogs/catalogs.json";
+const LOCAL_MODEL_PATH = new URL("./models/", window.location.href).href;
+const LOCAL_WASM_PATH = new URL("./vendor/transformers/", window.location.href).href;
+const ANALYSIS_WIDTH = 256;
+const ANALYSIS_HEIGHT = 144;
+const BOX_THRESHOLD = 0.01;
+const MAX_MISSED_DETECTIONS = 8;
+const POSE_INTERVAL_MS = 300;
+const TRACK_SMOOTHING = 0.55;
 
 init();
 
 async function init() {
   try {
-    const response = await fetch("questions.json", { cache: "no-store" });
+    const manifest = await loadCatalogManifest();
+    const catalogId = getRequestedCatalogId();
+    if (!catalogId) {
+      showCatalogParameterMessage(manifest);
+      return;
+    }
+
+    const catalog = findCatalog(manifest, catalogId);
+    if (!catalog) {
+      showCatalogParameterMessage(manifest, catalogId);
+      return;
+    }
+
+    const response = await fetch(`catalogs/${catalog.file}`, { cache: "no-store" });
     if (!response.ok) {
-      throw new Error(`questions.json konnte nicht geladen werden (${response.status})`);
+      throw new Error(`Fragenkatalog "${catalogId}" konnte nicht geladen werden (${response.status})`);
     }
 
     state.config = await response.json();
+    state.catalogId = catalog.id;
     introTitle.textContent = state.config.title || "Quiz";
     introDescription.textContent = state.config.description || "";
+    catalogLinks.classList.add("hidden");
+    introActions.classList.remove("hidden");
     prepareButton.disabled = false;
     cameraNote.textContent = "Kamera und Pose-Modell vor dem Start vorbereiten.";
   } catch (error) {
@@ -85,12 +112,66 @@ async function init() {
   }
 }
 
+async function loadCatalogManifest() {
+  const response = await fetch(CATALOG_MANIFEST_PATH, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("Kein gültiger Fragenkatalog gesetzt. Bitte URL-Parameter ?catalog=<name> verwenden.");
+  }
+  return response.json();
+}
+
+function getRequestedCatalogId() {
+  return new URLSearchParams(window.location.search).get("catalog")?.trim() || "";
+}
+
+function findCatalog(manifest, requestedCatalogId) {
+  const normalized = normalizeCatalogId(requestedCatalogId);
+  return (manifest.catalogs || []).find((catalog) => {
+    return normalizeCatalogId(catalog.id) === normalized || normalizeCatalogId(catalog.file) === normalized;
+  });
+}
+
+function normalizeCatalogId(value) {
+  return String(value || "").replace(/\.json$/i, "").toLowerCase();
+}
+
+function showCatalogParameterMessage(manifest, invalidCatalogId = "") {
+  const catalogs = manifest?.catalogs || [];
+  introTitle.textContent = invalidCatalogId
+    ? "Fragenkatalog nicht gefunden"
+    : "Fragenkatalog auswählen";
+  introDescription.textContent = catalogs.length
+    ? "Bitte einen Fragenkatalog auswählen."
+    : "Bitte einen gültigen URL-Parameter ?catalog=<name> setzen.";
+  cameraNote.textContent = invalidCatalogId ? `Unbekannter Katalog: ${invalidCatalogId}` : "";
+  introActions.classList.add("hidden");
+  renderCatalogLinks(catalogs);
+  prepareButton.disabled = true;
+  startButton.disabled = true;
+}
+
+function renderCatalogLinks(catalogs) {
+  catalogLinks.innerHTML = "";
+  if (!catalogs.length) {
+    catalogLinks.classList.add("hidden");
+    return;
+  }
+
+  for (const catalog of catalogs) {
+    const link = document.createElement("a");
+    const url = new URL(window.location.href);
+    url.searchParams.set("catalog", catalog.id);
+    link.href = url.href;
+    link.textContent = catalog.title || catalog.id;
+    catalogLinks.append(link);
+  }
+
+  catalogLinks.classList.remove("hidden");
+}
+
 prepareButton.addEventListener("click", prepareExperience);
 startButton.addEventListener("click", startGame);
-restartButton.addEventListener("click", startGame);
-recalibrateButton.addEventListener("click", async () => {
-  state.trackedPerson = null;
-});
+restartButton.addEventListener("click", showIntro);
 answers.addEventListener("click", (event) => {
   const answer = event.target.closest(".answer");
   if (!answer || !state.acceptingAnswers) {
@@ -114,8 +195,6 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-window.addEventListener("resize", resizeOverlay);
-
 async function prepareExperience() {
   if (state.setupInProgress || state.setupReady) {
     return;
@@ -130,17 +209,25 @@ async function prepareExperience() {
     cameraNote.textContent = "Kamerafreigabe bestätigen ...";
     await ensureCamera();
     cameraNote.textContent = "Pose-Modell wird geladen ...";
-    await ensurePoseModel();
+    try {
+      await ensurePoseModel();
+      state.manualFallback = false;
+      cameraNote.textContent = "Bereit. Die nächste Schaltfläche startet direkt die erste Frage.";
+    } catch (poseError) {
+      state.manualFallback = true;
+      cameraNote.textContent = "Kamera bereit. Pose-Modell nicht verfügbar, Antworten können angeklickt werden.";
+      console.info(poseError);
+    }
     state.setupReady = true;
-    cameraNote.textContent = "Bereit. Die nächste Schaltfläche startet direkt die erste Frage.";
     prepareButton.textContent = "Bereit";
     startButton.disabled = false;
   } catch (error) {
     state.manualFallback = true;
-    state.setupReady = true;
-    cameraNote.textContent = "Kamera oder Pose-Modell nicht verfügbar. Manuelle Antwortauswahl ist aktiv.";
+    state.setupReady = false;
+    cameraNote.textContent = "Kamera nicht verfügbar. Bitte Browser-Berechtigung prüfen und erneut versuchen.";
     console.info(error);
-    startButton.disabled = false;
+    prepareButton.disabled = false;
+    prepareButton.textContent = "Kamera vorbereiten";
   } finally {
     state.setupInProgress = false;
   }
@@ -156,9 +243,12 @@ async function startGame() {
   }
 
   resetTimers();
+  stopConfetti();
   state.score = 0;
   state.currentIndex = 0;
   state.selectedAnswerIndex = null;
+  state.trackedPerson = null;
+  state.missedDetections = 0;
   state.acceptingAnswers = false;
   state.selectedQuestions = chooseQuestions(
     state.config.questions || [],
@@ -166,7 +256,7 @@ async function startGame() {
   );
 
   if (!state.selectedQuestions.length) {
-    cameraNote.textContent = "Keine Fragen in questions.json gefunden.";
+    cameraNote.textContent = "Keine Fragen im ausgewählten Katalog gefunden.";
     return;
   }
 
@@ -175,11 +265,32 @@ async function startGame() {
   quiz.classList.remove("hidden");
   feedback.classList.add("hidden");
 
-  resizeOverlay();
   showQuestion();
-  startRenderLoop();
   if (!state.manualFallback) {
     startPoseLoop();
+  }
+}
+
+function showIntro() {
+  resetTimers();
+  stopPoseLoop();
+  stopConfetti();
+  state.acceptingAnswers = false;
+  state.selectedAnswerIndex = null;
+  state.trackedPerson = null;
+  state.missedDetections = 0;
+  quiz.classList.add("hidden");
+  result.classList.add("hidden");
+  intro.classList.remove("hidden");
+  feedback.classList.add("hidden");
+
+  if (state.setupReady) {
+    prepareButton.disabled = true;
+    prepareButton.textContent = "Bereit";
+    startButton.disabled = false;
+    cameraNote.textContent = state.manualFallback
+      ? "Kamera bereit. Pose-Modell nicht verfügbar, Antworten können angeklickt werden."
+      : "Bereit. Die nächste Schaltfläche startet direkt die erste Frage.";
   }
 }
 
@@ -190,19 +301,28 @@ function chooseQuestions(questions, count) {
 
 async function ensureCamera() {
   if (state.stream) {
+    video.classList.add("active");
     return;
   }
 
   feedback.textContent = "Kamera wird gestartet ...";
   state.stream = await navigator.mediaDevices.getUserMedia({
     video: {
-      width: { ideal: 1280 },
-      height: { ideal: 720 },
+      width: { ideal: 640 },
+      height: { ideal: 360 },
       facingMode: "user",
     },
     audio: false,
   });
   video.srcObject = state.stream;
+  video.classList.add("active");
+  await new Promise((resolve) => {
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      resolve();
+    } else {
+      video.onloadedmetadata = () => resolve();
+    }
+  });
   await video.play();
 }
 
@@ -211,16 +331,39 @@ async function ensurePoseModel() {
     return;
   }
 
-  env.allowLocalModels = false;
+  env.localModelPath = LOCAL_MODEL_PATH;
+  env.allowLocalModels = true;
+  env.allowRemoteModels = false;
+  if (env.backends?.onnx?.wasm) {
+    env.backends.onnx.wasm.wasmPaths = LOCAL_WASM_PATH;
+  }
   feedback.textContent = "Pose-Modell wird geladen ...";
   feedback.classList.remove("hidden");
 
-  state.poseModel = await AutoModel.from_pretrained(MODEL_ID, {
-    dtype: "q8",
-  });
+  state.poseModel = await loadPoseModel();
   state.poseProcessor = await AutoProcessor.from_pretrained(MODEL_ID);
   state.poseReady = true;
   feedback.classList.add("hidden");
+}
+
+async function loadPoseModel() {
+  const devices = navigator.gpu ? ["wasm", "webgpu"] : ["wasm"];
+  const attempts = devices.flatMap((device) => [
+    { device, dtype: "q8" },
+    { device },
+  ]);
+
+  let lastError = null;
+  for (const options of attempts) {
+    try {
+      return await AutoModel.from_pretrained(MODEL_ID, options);
+    } catch (error) {
+      lastError = error;
+      console.info("Pose model loading attempt failed.", options, error);
+    }
+  }
+
+  throw lastError || new Error("Pose model could not be loaded.");
 }
 
 function showCameraFallback(error) {
@@ -245,7 +388,8 @@ function showQuestion() {
   questionText.textContent = question.question;
   renderAnswers(question.options);
 
-  state.remaining = Number(state.config.timeLimit || 10);
+  state.timeLimit = Number(state.config.timeLimit || 10);
+  state.remaining = state.timeLimit;
   updateTimer();
   state.timerId = window.setInterval(() => {
     state.remaining -= 1;
@@ -276,7 +420,10 @@ function renderAnswers(options) {
 }
 
 function updateTimer() {
-  timerValue.textContent = `${Math.max(0, state.remaining)}s`;
+  const remaining = Math.max(0, state.remaining);
+  const progressRatio = state.timeLimit ? remaining / state.timeLimit : 0;
+  timerValue.textContent = `${remaining}s`;
+  timer.style.setProperty("--timer-progress", String(progressRatio));
 }
 
 function evaluateAnswer() {
@@ -293,7 +440,7 @@ function evaluateAnswer() {
   const isCorrect = pickedIndex === correctIndex;
 
   if (isCorrect) {
-    state.score += Number(question.points || 0);
+    state.score += 1;
   }
 
   for (const answer of answers.children) {
@@ -303,8 +450,7 @@ function evaluateAnswer() {
     answer.classList.toggle("selected", index === pickedIndex);
   }
 
-  const points = Number(question.points || 0);
-  feedback.textContent = isCorrect ? `Richtig +${points}` : "Leider falsch";
+  feedback.textContent = isCorrect ? "Richtig +1" : "Leider falsch";
   feedback.classList.remove("hidden");
 
   state.feedbackId = window.setTimeout(() => {
@@ -319,23 +465,24 @@ function evaluateAnswer() {
 
 function showResult() {
   resetTimers();
+  stopPoseLoop();
   state.acceptingAnswers = false;
   quiz.classList.add("hidden");
   result.classList.remove("hidden");
 
-  const maximumScore = state.selectedQuestions.reduce(
-    (total, question) => total + Number(question.points || 0),
-    0,
-  );
+  const maximumScore = state.selectedQuestions.length;
   const scoring = findScoringMessage(state.score);
   const resultColor = scoring?.color || "#111111";
+  const certificateUrl = buildCertificateUrl(state.score);
 
   resultCard.style.borderColor = resultColor;
   resultCard.style.setProperty("--result-color", resultColor);
   resultScore.textContent = `${state.score} von ${maximumScore} Punkten`;
   resultTitle.textContent = scoring?.title || "Ergebnis";
   resultDescription.textContent = scoring?.description || "";
-  resultImage.src = captureVideoFrame();
+  certificateLink.href = certificateUrl;
+  renderCertificateQr(certificateUrl, "QR-Code scannen und Urkunde auf dem eigenen Gerät erstellen.");
+  startConfetti();
 }
 
 function findScoringMessage(score) {
@@ -344,61 +491,32 @@ function findScoringMessage(score) {
   });
 }
 
-function startRenderLoop() {
-  if (state.rafId) {
-    cancelAnimationFrame(state.rafId);
-  }
-
-  const render = () => {
-    drawCameraOverlay();
-    updateSelectedAnswerFromPose();
-    state.rafId = requestAnimationFrame(render);
-  };
-
-  render();
-}
-
 function startPoseLoop() {
-  if (state.poseIntervalId) {
-    clearInterval(state.poseIntervalId);
-  }
-
-  state.poseIntervalId = window.setInterval(() => {
-    if (!state.acceptingAnswers || !state.poseReady || state.poseBusy) {
-      return;
-    }
-    runPoseEstimation();
-  }, POSE_INTERVAL_MS);
-
-  runPoseEstimation();
+  stopPoseLoop();
+  state.poseLoopActive = true;
+  runPoseLoopTick();
 }
 
-function drawCameraOverlay() {
-  if (!video.videoWidth || !video.videoHeight) {
+function stopPoseLoop() {
+  if (state.poseIntervalId) {
+    clearTimeout(state.poseIntervalId);
+    state.poseIntervalId = null;
+  }
+  state.poseLoopActive = false;
+}
+
+async function runPoseLoopTick() {
+  if (!state.poseLoopActive) {
     return;
   }
 
-  const width = overlay.width;
-  const height = overlay.height;
-  overlayContext.clearRect(0, 0, width, height);
-  overlayContext.save();
-  overlayContext.globalAlpha = 0.32;
-  overlayContext.translate(width, 0);
-  overlayContext.scale(-1, 1);
-  drawVideoCover(overlayContext, video, width, height);
-  overlayContext.restore();
-
-  if (state.selectedAnswerIndex !== null && state.acceptingAnswers) {
-    const columnWidth = width / answers.children.length;
-    const x = state.selectedAnswerIndex * columnWidth;
-    overlayContext.save();
-    overlayContext.globalAlpha = 0.18;
-    overlayContext.fillStyle = "#ffffff";
-    overlayContext.fillRect(x, 0, columnWidth, height);
-    overlayContext.restore();
+  if (state.acceptingAnswers && state.poseReady && !state.poseBusy) {
+    await runPoseEstimation();
   }
 
-  drawTrackedPose(width, height);
+  if (state.poseLoopActive) {
+    state.poseIntervalId = window.setTimeout(runPoseLoopTick, POSE_INTERVAL_MS);
+  }
 }
 
 function updateSelectedAnswerFromPose() {
@@ -429,10 +547,9 @@ async function runPoseEstimation() {
     drawAnalysisFrame();
     const image = RawImage.fromCanvas(analysisCanvas);
     const { pixel_values, original_sizes, reshaped_input_sizes } = await state.poseProcessor(image);
-    const { dets, keypoints } = await state.poseModel({ input: pixel_values });
+    const { dets } = await state.poseModel({ input: pixel_values });
     const detections = parsePoseDetections(
       dets.tolist()[0],
-      keypoints.tolist()[0],
       original_sizes[0],
       reshaped_input_sizes[0],
     );
@@ -444,7 +561,7 @@ async function runPoseEstimation() {
   }
 }
 
-function parsePoseDetections(predictedBoxes, predictedPoints, originalSize, reshapedSize) {
+function parsePoseDetections(predictedBoxes, originalSize, reshapedSize) {
   const [height, width] = originalSize;
   const [resizedHeight, resizedWidth] = reshapedSize;
   const xScale = width / resizedWidth;
@@ -464,28 +581,15 @@ function parsePoseDetections(predictedBoxes, predictedPoints, originalSize, resh
       y2: clamp(ymax * yScale, 0, height),
       score: boxScore,
     };
-    const keypoints = predictedPoints[index]
-      .map(([x, y, score], pointIndex) => ({
-        label: state.poseModel.config.id2label?.[pointIndex] || String(pointIndex),
-        x: x * xScale,
-        y: y * yScale,
-        score,
-      }))
-      .filter((point) => point.score >= POINT_THRESHOLD);
-
-    if (keypoints.length < MIN_VISIBLE_KEYPOINTS) {
-      continue;
-    }
-
-    const keypointCenter = getKeypointCenter(keypoints);
     const boxWidth = Math.max(1, scaledBox.x2 - scaledBox.x1);
     const boxHeight = Math.max(1, scaledBox.y2 - scaledBox.y1);
+    const centerX = scaledBox.x1 + boxWidth / 2;
+    const centerY = scaledBox.y1 + boxHeight / 2;
     const area = boxWidth * boxHeight;
     detections.push({
       box: scaledBox,
-      keypoints,
-      xRatio: clamp(keypointCenter.x / width, 0, 1),
-      yRatio: clamp(keypointCenter.y / height, 0, 1),
+      xRatio: clamp(centerX / width, 0, 1),
+      yRatio: clamp(centerY / height, 0, 1),
       area,
       score: boxScore,
       closeness: area * boxScore,
@@ -497,13 +601,19 @@ function parsePoseDetections(predictedBoxes, predictedPoints, originalSize, resh
 
 function updateTrackedPerson(detections) {
   if (!detections.length) {
-    state.trackedPerson = null;
+    state.missedDetections += 1;
+    if (state.missedDetections >= MAX_MISSED_DETECTIONS) {
+      state.trackedPerson = null;
+    }
+    updateSelectedAnswerFromPose();
     return;
   }
 
+  state.missedDetections = 0;
   const closest = detections[0];
   if (!state.trackedPerson) {
     state.trackedPerson = closest;
+    updateSelectedAnswerFromPose();
     return;
   }
 
@@ -520,52 +630,7 @@ function updateTrackedPerson(detections) {
       score: closest.box.score,
     },
   };
-}
-
-function getKeypointCenter(keypoints) {
-  const torsoNames = new Set(["left_shoulder", "right_shoulder", "left_hip", "right_hip"]);
-  const torsoPoints = keypoints.filter((point) => torsoNames.has(point.label));
-  const points = torsoPoints.length >= 2 ? torsoPoints : keypoints;
-  const total = points.reduce(
-    (sum, point) => {
-      sum.x += point.x;
-      sum.y += point.y;
-      return sum;
-    },
-    { x: 0, y: 0 },
-  );
-  return {
-    x: total.x / points.length,
-    y: total.y / points.length,
-  };
-}
-
-function drawTrackedPose(width, height) {
-  if (!state.trackedPerson || !state.acceptingAnswers) {
-    return;
-  }
-
-  const scaleX = width / ANALYSIS_WIDTH;
-  const scaleY = height / ANALYSIS_HEIGHT;
-  const { box, keypoints } = state.trackedPerson;
-
-  overlayContext.save();
-  overlayContext.globalAlpha = 0.86;
-  overlayContext.strokeStyle = "#ffffff";
-  overlayContext.lineWidth = 4;
-  overlayContext.strokeRect(
-    box.x1 * scaleX,
-    box.y1 * scaleY,
-    (box.x2 - box.x1) * scaleX,
-    (box.y2 - box.y1) * scaleY,
-  );
-  overlayContext.fillStyle = "#ffffff";
-  for (const point of keypoints) {
-    overlayContext.beginPath();
-    overlayContext.arc(point.x * scaleX, point.y * scaleY, 4, 0, Math.PI * 2);
-    overlayContext.fill();
-  }
-  overlayContext.restore();
+  updateSelectedAnswerFromPose();
 }
 
 function clamp(value, min, max) {
@@ -606,23 +671,145 @@ function drawVideoCover(context, source, width, height) {
   context.drawImage(source, x, y, drawWidth, drawHeight);
 }
 
-function captureVideoFrame() {
-  const canvas = document.createElement("canvas");
-  canvas.width = video.videoWidth || 1280;
-  canvas.height = video.videoHeight || 720;
-  const context = canvas.getContext("2d");
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  return canvas.toDataURL("image/jpeg", 0.9);
+function buildCertificateUrl(score) {
+  const url = new URL("certificate.html", window.location.href);
+  if (state.catalogId) {
+    url.searchParams.set("catalog", state.catalogId);
+  }
+  url.searchParams.set("score", String(score));
+  return url.href;
 }
 
-function resizeOverlay() {
-  const rect = quiz.getBoundingClientRect();
-  const answerRect = answers.getBoundingClientRect();
+function renderCertificateQr(payload, note) {
+  const qr = createQr(payload);
+  if (!qr) {
+    clearCertificateQr("Die Urkunde ist zu groß für einen einzelnen QR-Code.");
+    return;
+  }
+
+  const modules = qr.getModuleCount();
+  const size = 336;
+  const quiet = 4;
+  const scale = Math.floor(size / (modules + quiet * 2));
+  const actualSize = (modules + quiet * 2) * scale;
+
+  certificateQr.width = actualSize;
+  certificateQr.height = actualSize;
+  certificateQrContext.fillStyle = "#ffffff";
+  certificateQrContext.fillRect(0, 0, actualSize, actualSize);
+  certificateQrContext.fillStyle = "#333646";
+
+  for (let row = 0; row < modules; row += 1) {
+    for (let col = 0; col < modules; col += 1) {
+      if (qr.isDark(row, col)) {
+        certificateQrContext.fillRect((col + quiet) * scale, (row + quiet) * scale, scale, scale);
+      }
+    }
+  }
+
+  certificateQrNote.textContent = note;
+}
+
+function clearCertificateQr(note) {
+  certificateQr.width = 336;
+  certificateQr.height = 336;
+  certificateQrContext.fillStyle = "#ffffff";
+  certificateQrContext.fillRect(0, 0, certificateQr.width, certificateQr.height);
+  certificateQrNote.textContent = note;
+}
+
+function createQr(payload) {
+  if (!payload || !window.qrcode) {
+    return null;
+  }
+
+  try {
+    const qr = window.qrcode(0, "L");
+    qr.addData(payload);
+    qr.make();
+    return qr;
+  } catch {
+    return null;
+  }
+}
+
+function startConfetti() {
+  stopConfetti();
+
+  const colors = ["#ffdd00", "#333646", "#4da72e", "#e97131", "#c00000", "#ffffff"];
+  const rect = result.getBoundingClientRect();
   const pixelRatio = window.devicePixelRatio || 1;
-  overlay.width = Math.max(1, Math.round(rect.width * pixelRatio));
-  overlay.height = Math.max(1, Math.round(answerRect.height * pixelRatio));
-  overlay.style.width = `${rect.width}px`;
-  overlay.style.height = `${answerRect.height}px`;
+  const width = Math.max(1, Math.round(rect.width * pixelRatio));
+  const height = Math.max(1, Math.round(rect.height * pixelRatio));
+  const gravity = 0.16 * pixelRatio;
+  const startedAt = performance.now();
+  const spawnDuration = 1800;
+  const particles = Array.from({ length: 170 }, () => ({
+    x: Math.random() * width,
+    y: -height * (0.08 + Math.random() * 0.75),
+    size: (5 + Math.random() * 9) * pixelRatio,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    velocityX: (-3 + Math.random() * 6) * pixelRatio,
+    velocityY: (2 + Math.random() * 5) * pixelRatio,
+    rotation: Math.random() * Math.PI * 2,
+    rotationSpeed: -0.18 + Math.random() * 0.36,
+    sway: Math.random() * Math.PI * 2,
+  }));
+
+  confettiCanvas.width = width;
+  confettiCanvas.height = height;
+  confettiCanvas.classList.add("active");
+
+  const draw = (now) => {
+    const elapsed = now - startedAt;
+    let visibleParticles = 0;
+    confettiContext.clearRect(0, 0, width, height);
+
+    for (const particle of particles) {
+      particle.sway += 0.05;
+      particle.x += particle.velocityX + Math.sin(particle.sway) * 1.2 * pixelRatio;
+      particle.y += particle.velocityY;
+      particle.velocityY += gravity;
+      particle.rotation += particle.rotationSpeed;
+
+      if (particle.y > height + 40 * pixelRatio && elapsed < spawnDuration) {
+        particle.y = -40 * pixelRatio;
+        particle.x = Math.random() * width;
+        particle.velocityY = (2 + Math.random() * 4) * pixelRatio;
+      }
+
+      if (particle.y <= height + 40 * pixelRatio) {
+        visibleParticles += 1;
+      }
+
+      confettiContext.save();
+      confettiContext.translate(particle.x, particle.y);
+      confettiContext.rotate(particle.rotation);
+      confettiContext.fillStyle = particle.color;
+      confettiContext.fillRect(-particle.size / 2, -particle.size / 3, particle.size, particle.size * 0.62);
+      confettiContext.restore();
+    }
+
+    if (visibleParticles > 0) {
+      state.confettiRafId = requestAnimationFrame(draw);
+    } else {
+      stopConfetti();
+    }
+  };
+
+  state.confettiRafId = requestAnimationFrame(draw);
+}
+
+function stopConfetti() {
+  if (state.confettiRafId) {
+    cancelAnimationFrame(state.confettiRafId);
+    state.confettiRafId = null;
+  }
+
+  if (confettiCanvas) {
+    confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confettiCanvas.classList.remove("active");
+  }
 }
 
 function resetTimers() {

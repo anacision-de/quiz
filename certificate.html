@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Urkunde</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="certificate-page">
+    <main class="certificate-main">
+      <section class="certificate-panel">
+        <p id="certificate-kicker" class="certificate-kicker"></p>
+        <h1>Urkunde erstellen</h1>
+        <p id="certificate-summary"></p>
+        <form id="certificate-form" class="certificate-form">
+          <label for="player-name">Name</label>
+          <input id="player-name" name="name" type="text" autocomplete="name" maxlength="48" required />
+          <div class="certificate-actions">
+            <button class="primary-button" type="submit">Urkunde generieren</button>
+            <a id="download-link" class="download-link hidden" download="ki-urkunde.jpg" href="#">Bild speichern</a>
+          </div>
+        </form>
+        <p>Auf dem Handy kann das Bild auch gedrückt gehalten und in die Foto-Bibliothek gespeichert werden.</p>
+      </section>
+
+      <section class="certificate-preview" aria-label="Urkundenvorschau">
+        <img id="certificate-image" class="certificate-image" alt="Generierte Urkunde" />
+        <canvas id="certificate-canvas" class="certificate-canvas"></canvas>
+      </section>
+    </main>
+
+    <script src="certificate.js"></script>
+  </body>
+</html>

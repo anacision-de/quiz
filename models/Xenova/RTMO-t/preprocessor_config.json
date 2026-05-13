@@ -1,0 +1,12 @@
+{
+  "do_convert_rgb": true,
+  "do_normalize": false,
+  "do_rescale": false,
+  "do_resize": true,
+  "feature_extractor_type": "ImageFeatureExtractor",
+  "resample": 2,
+  "size": {
+    "width": 416,
+	"height": 416
+  }
+}
