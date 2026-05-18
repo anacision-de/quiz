@@ -1,9 +1,9 @@
 {
   "catalogs": [
     {
-      "id": "ai-act",
-      "title": "Sind Sie bereit für die KI-Verordnung?",
-      "file": "ai-act.json"
+      "id": "ki-verwaltung",
+      "title": "Wie fit sind Sie für die Verwaltungswelt von morgen?",
+      "file": "ki-verwaltung.json"
     }
   ]
 }

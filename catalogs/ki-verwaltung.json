@@ -1,0 +1,698 @@
+{
+  "questions": [
+    {
+      "question": "Was ist der größte Vorteil KI-gestützter Fachverfahren in der Verwaltung?",
+      "options": [
+        {
+          "value": "Vollautomatische Bescheidung aller Fälle",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Unterstützung komplexer Entscheidungsprozesse",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Ersatz gesetzlicher Prüfungen",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Wann erzeugt KI in Behörden den höchsten Mehrwert?",
+      "options": [
+        {
+          "value": "Bei vollständig unstrukturierten Prozessen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Bei repetitiven, datenbasierten Abläufen",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Ausschließlich bei strategischen Entscheidungen",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was bedeutet „nachnutzbare KI“ im Verwaltungskontext?",
+      "options": [
+        {
+          "value": "Eine Lösung kann in mehreren Behörden adaptiert werden",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Eine KI darf mehrfach trainiert werden",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Die Software ist quelloffen veröffentlicht",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Herausforderung ist bei KI-Projekten in Behörden am häufigsten kritisch?",
+      "options": [
+        {
+          "value": "Rechenleistung",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Datenqualität und Prozessverständnis",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Anzahl der Endgeräte",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Wofür eignet sich generative KI in Fachverfahren besonders?",
+      "options": [
+        {
+          "value": "Ersatz rechtsverbindlicher Entscheidungen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Strukturierung und Zusammenfassung komplexer Inhalte",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Vollständige Prozesssteuerung ohne Fachpersonal",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Warum ist Prozessintegration bei KI-Anwendungen entscheidend?",
+      "options": [
+        {
+          "value": "Weil isolierte KI-Lösungen selten produktiv genutzt werden",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Weil KI keine Schnittstellen nutzen kann",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Weil Fachverfahren keine Daten verarbeiten",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Aussage beschreibt produktive KI-Nutzung am treffendsten?",
+      "options": [
+        {
+          "value": "KI wird ausschließlich in Innovationslaboren getestet",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "KI unterstützt reale Fachprozesse im Tagesgeschäft",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "KI ersetzt bestehende IT-Landschaften vollständig",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was ist ein typisches Ziel intelligenter Automatisierung?",
+      "options": [
+        {
+          "value": "Fachkräfte vollständig zu ersetzen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Standardisierte Arbeitsschritte effizienter zu machen",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Verwaltungsprozesse stärker zu zentralisieren",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Eigenschaft ist für vertrauenswürdige Verwaltungs-KI zentral?",
+      "options": [
+        {
+          "value": "Hohe Kreativität",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Nachvollziehbarkeit der Ergebnisse",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Maximale Antwortgeschwindigkeit",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was beschreibt „Human in the Loop“ korrekt?",
+      "options": [
+        {
+          "value": "Entscheidungen werden ausschließlich durch Menschen getroffen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "KI arbeitet ohne menschliche Einflussnahme",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Menschen prüfen oder steuern KI-Ergebnisse aktiv",
+          "color": "#3A6CB4",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "question": "Warum gelten Fachverfahren als besonders anspruchsvoll für KI-Projekte?",
+      "options": [
+        {
+          "value": "Weil sie oft komplexe Regeln und Datenstrukturen enthalten",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Weil sie ausschließlich papierbasiert sind",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Weil sie keine Schnittstellen besitzen dürfen",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Rolle spielt Datenschutz bei Verwaltungs-KI?",
+      "options": [
+        {
+          "value": "Datenschutz ist nur bei Cloudlösungen relevant",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Datenschutz ist integraler Bestandteil der Systemarchitektur",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Datenschutz betrifft ausschließlich Bürgerportale",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was bedeutet digitale Souveränität im KI-Umfeld?",
+      "options": [
+        {
+          "value": "Kontrolle über Daten, Modelle und Infrastruktur",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Verzicht auf externe Technologien",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Ausschließliche Nutzung lokaler Server",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Aufgabe eignet sich besonders für KI-Unterstützung?",
+      "options": [
+        {
+          "value": "Juristisch finale Einzelfallentscheidungen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Voranalyse und Priorisierung eingehender Dokumente",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Politische Entscheidungsfindung",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was zeichnet maßgeschneiderte KI-Lösungen aus?",
+      "options": [
+        {
+          "value": "Sie orientieren sich an konkreten Fachprozessen",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Sie ersetzen bestehende Software vollständig",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Sie funktionieren ohne Anpassung sofort überall",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Warum scheitern KI-Projekte häufig in frühen Phasen?",
+      "options": [
+        {
+          "value": "Wegen zu geringer Bildschirmgrößen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Wegen fehlender Prozess- und Datenbasis",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Wegen zu vieler Mitarbeitender",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was ist bei der Einführung von KI in Behörden besonders wichtig?",
+      "options": [
+        {
+          "value": "Technologische Trends",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Akzeptanz und Einbindung der Mitarbeitenden",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Austausch aller Bestandssysteme",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Aussage zu KI in der Verwaltung ist am zutreffendsten?",
+      "options": [
+        {
+          "value": "KI ersetzt Fachwissen",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "KI ergänzt menschliche Expertise",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "KI macht Regelwerke überflüssig",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Warum sind Schnittstellen für KI-Projekte relevant?",
+      "options": [
+        {
+          "value": "Sie ermöglichen Datenaustausch mit Fachverfahren",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Sie ersetzen Datenbanken",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Sie verhindern Medienbrüche nur im Frontend",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was ist ein realistischer Nutzen von KI im Dokumentenmanagement?",
+      "options": [
+        {
+          "value": "Vollständige juristische Bewertung",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Schnellere Analyse großer Dokumentenmengen",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Ersatz aller Aktenführungssysteme",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Herausforderung entsteht häufig bei Verwaltungsdaten?",
+      "options": [
+        {
+          "value": "Unterschiedliche Datenqualitäten und Formate",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Zu geringe Datenmengen",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Zu hohe Standardisierung",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was beschreibt „skalierbare KI-Lösungen“ am besten?",
+      "options": [
+        {
+          "value": "Lösungen funktionieren nur in einer Behörde",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Lösungen können auf weitere Organisationen übertragen werden",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Lösungen benötigen keine Wartung",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Warum werden KI-Projekte häufig zunächst pilotiert?",
+      "options": [
+        {
+          "value": "Um technische und fachliche Wirkung zu validieren",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Um Datenschutzregelungen zu umgehen",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Um bestehende Prozesse abzuschaffen",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Aussage trifft auf moderne Verwaltungs-KI zu?",
+      "options": [
+        {
+          "value": "Sie arbeitet ausschließlich regelbasiert",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Sie kombiniert Datenanalyse und Prozessunterstützung",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Sie ersetzt organisatorische Verantwortung",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was ist bei KI-Ergebnissen besonders wichtig?",
+      "options": [
+        {
+          "value": "Hohe Textmenge",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Fachliche Plausibilität",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Maximale Kreativität",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Aufgabe übernimmt KI häufig zuerst?",
+      "options": [
+        {
+          "value": "Strategische Behördensteuerung",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Unterstützung repetitiver Routinetätigkeiten",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Vollständige Gesetzesauslegung",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Warum ist Nachnutzbarkeit für Behörden relevant?",
+      "options": [
+        {
+          "value": "Lösungen können wirtschaftlicher eingeführt werden",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Behörden benötigen identische Prozesse",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "KI darf nur einmal entwickelt werden",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Aussage beschreibt gute KI-Integration?",
+      "options": [
+        {
+          "value": "KI wird zusätzlich neben allen Prozessen betrieben",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "KI unterstützt bestehende Abläufe möglichst nahtlos",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "KI ersetzt sämtliche Fachverfahren",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Welche Eigenschaft macht KI in Fachverfahren besonders wertvoll?",
+      "options": [
+        {
+          "value": "Verarbeitung großer Informationsmengen",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Vollständige Fehlerfreiheit",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Wegfall regulatorischer Anforderungen",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was unterscheidet produktive KI von Demonstratoren?",
+      "options": [
+        {
+          "value": "Produktive KI ist in reale Prozesse eingebunden",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Demonstratoren besitzen grundsätzlich keine Daten",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Produktive KI benötigt keine Nutzerinteraktion",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was ist meist der schwierigste Teil eines KI-Projekts in der Verwaltung?",
+      "options": [
+        {
+          "value": "Die Auswahl des Logos",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Die Integration in bestehende Prozesse",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Die Beschaffung von Monitoren",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Wann wird KI in Behörden nachhaltig erfolgreich?",
+      "options": [
+        {
+          "value": "Wenn Technologie und Fachlichkeit gemeinsam gedacht werden",
+          "color": "#BF202C",
+          "correct": true
+        },
+        {
+          "value": "Wenn möglichst viele Tools parallel genutzt werden",
+          "color": "#FEC71D",
+          "correct": false
+        },
+        {
+          "value": "Wenn Prozesse vollständig neu erfunden werden",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Was entscheidet am Ende über den Erfolg einer KI-Lösung?",
+      "options": [
+        {
+          "value": "Modellgröße",
+          "color": "#BF202C",
+          "correct": false
+        },
+        {
+          "value": "Praktischer Nutzen im Arbeitsalltag",
+          "color": "#FEC71D",
+          "correct": true
+        },
+        {
+          "value": "Anzahl der Buzzwords im Projekt",
+          "color": "#3A6CB4",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "scoring": [
+    {
+      "min": 0,
+      "max": 1,
+      "title": "Faxkompetenz vorhanden",
+      "description": "Die Digitalisierung ist angekommen – zumindest theoretisch. Der Wille zur Transformation wird anerkannt.",
+      "color": "#C00000"
+    },
+    {
+      "min": 2,
+      "max": 3,
+      "title": "Prozessoptimierungsbeauftragte:r",
+      "description": "Sie kennen die wesentlichen Herausforderungen moderner Verwaltungsprozesse und bewegen sich sicher zwischen Fachlichkeit und Technologie.",
+      "color": "#e88223"
+    },
+    {
+      "min": 4,
+      "max": 4,
+      "title": "KI-Vorgangsbeschleuniger:in",
+      "description": "Starkes Verständnis für produktive KI-Nutzung in Behörden. Wahrscheinlich haben Sie bereits innerlich einen Förderantrag formuliert.",
+      "color": "#FEC71D"
+    },
+    {
+      "min": 5,
+      "max": 5,
+      "title": "Zertifizierte Zukunftsverwaltung",
+      "description": "Maximale Punktzahl. Sie sind bereit für Skalierung, Nachnutzung und mindestens drei Panels auf dem Zukunftskongress.",
+      "color": "#20bf35"
+    }
+  ],
+  "timeLimit": 15,
+  "numberOfQuestions": 5,
+  "title": "Wie fit sind Sie für die Verwaltungswelt von morgen?",
+  "description": "In fünf Fragen zeigt sich, ob Sie noch im Faxmodus unterwegs  oder bereits für produktive KI-Anwendungen in der öffentlichen Verwaltung bereit sind. Eine Teilnahme ersetzt keine Schulung – sorgt aber zuverlässig für Gesprächsstoff an unserem Stand."
+}
