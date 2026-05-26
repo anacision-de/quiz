@@ -9,6 +9,7 @@ All browser runtime assets are served locally from this repository so the quiz c
 ## Question catalogs
 
 Question catalogs live in `catalogs/`. The available catalogs are declared in `catalogs/catalogs.json`.
+Answer area colors can be defined once per catalog with the top-level `answerColors` array. Colors are applied by answer position across all questions, so each question in a catalog should expose the same number of answers.
 
 Open the quiz with a catalog URL parameter, for example:
 

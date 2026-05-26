@@ -39,6 +39,7 @@ const confettiContext = confettiCanvas.getContext("2d");
 const state = {
   config: null,
   selectedQuestions: [],
+  displayedOptions: [],
   currentIndex: 0,
   score: 0,
   selectedAnswerIndex: null,
@@ -409,14 +410,15 @@ function showQuestion() {
 }
 
 function renderAnswers(options) {
+  state.displayedOptions = shuffleOptions(options);
   answers.innerHTML = "";
-  answers.style.gridTemplateColumns = `repeat(${options.length}, minmax(0, 1fr))`;
+  answers.style.gridTemplateColumns = `repeat(${state.displayedOptions.length}, minmax(0, 1fr))`;
 
-  for (const [index, option] of options.entries()) {
+  for (const [index, option] of state.displayedOptions.entries()) {
     const answer = document.createElement("article");
     answer.className = "answer";
     answer.dataset.index = String(index);
-    answer.style.setProperty("--answer-color", option.color || "#555555");
+    answer.style.setProperty("--answer-color", getAnswerColor(option, index));
 
     const label = document.createElement("div");
     label.className = "answer-label";
@@ -425,6 +427,19 @@ function renderAnswers(options) {
 
     answers.append(answer);
   }
+}
+
+function shuffleOptions(options) {
+  const shuffled = [...options];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+function getAnswerColor(option, index) {
+  return state.config?.answerColors?.[index] || option.color || "#555555";
 }
 
 function updateTimer() {
@@ -442,8 +457,7 @@ function evaluateAnswer() {
   state.acceptingAnswers = false;
   resetTimers();
 
-  const question = state.selectedQuestions[state.currentIndex];
-  const correctIndex = question.options.findIndex((option) => option.correct);
+  const correctIndex = state.displayedOptions.findIndex((option) => option.correct);
   const pickedIndex = state.selectedAnswerIndex;
   const isCorrect = pickedIndex === correctIndex;
 
@@ -529,8 +543,8 @@ async function runPoseLoopTick() {
 }
 
 function updateSelectedAnswerFromPose() {
-  const question = state.selectedQuestions[state.currentIndex];
-  if (!question) {
+  const optionCount = state.displayedOptions.length;
+  if (!optionCount) {
     return;
   }
 
@@ -540,7 +554,6 @@ function updateSelectedAnswerFromPose() {
     return;
   }
 
-  const optionCount = question.options.length;
   const selectedIndex = Math.min(optionCount - 1, Math.floor(state.trackedPerson.xRatio * optionCount));
   state.selectedAnswerIndex = selectedIndex;
   updateSelectedAnswerClasses();
