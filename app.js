@@ -51,6 +51,7 @@ const state = {
   timerId: null,
   poseIntervalId: null,
   poseLoopActive: false,
+  modelReleaseTimerId: null,
   missedDetections: 0,
   feedbackId: null,
   confettiRafId: null,
@@ -73,6 +74,7 @@ const BOX_THRESHOLD = 0.01;
 const MAX_MISSED_DETECTIONS = 8;
 const POSE_INTERVAL_MS = 300;
 const TRACK_SMOOTHING = 0.55;
+const MODEL_IDLE_RELEASE_MS = 45000;
 
 init();
 
@@ -172,6 +174,8 @@ function renderCatalogLinks(catalogs) {
 prepareButton.addEventListener("click", prepareExperience);
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", showIntro);
+window.addEventListener("pagehide", releaseRealtimeResources);
+document.addEventListener("visibilitychange", handleVisibilityChange);
 answers.addEventListener("click", (event) => {
   const answer = event.target.closest(".answer");
   if (!answer || !state.acceptingAnswers) {
@@ -202,6 +206,7 @@ async function prepareExperience() {
 
   state.setupInProgress = true;
   state.manualFallback = false;
+  cancelModelRelease();
   prepareButton.disabled = true;
   startButton.disabled = true;
 
@@ -244,6 +249,7 @@ async function startGame() {
 
   resetTimers();
   stopConfetti();
+  cancelModelRelease();
   state.score = 0;
   state.currentIndex = 0;
   state.selectedAnswerIndex = null;
@@ -275,6 +281,7 @@ function showIntro() {
   resetTimers();
   stopPoseLoop();
   stopConfetti();
+  scheduleModelRelease();
   state.acceptingAnswers = false;
   state.selectedAnswerIndex = null;
   state.trackedPerson = null;
@@ -308,8 +315,9 @@ async function ensureCamera() {
   feedback.textContent = "Kamera wird gestartet ...";
   state.stream = await navigator.mediaDevices.getUserMedia({
     video: {
-      width: { ideal: 640 },
-      height: { ideal: 360 },
+      width: { ideal: 426, max: 640 },
+      height: { ideal: 240, max: 360 },
+      frameRate: { ideal: 15, max: 24 },
       facingMode: "user",
     },
     audio: false,
@@ -466,6 +474,7 @@ function evaluateAnswer() {
 function showResult() {
   resetTimers();
   stopPoseLoop();
+  scheduleModelRelease();
   state.acceptingAnswers = false;
   quiz.classList.add("hidden");
   result.classList.remove("hidden");
@@ -543,11 +552,15 @@ async function runPoseEstimation() {
   }
 
   state.poseBusy = true;
+  let processed = null;
+  let output = null;
   try {
     drawAnalysisFrame();
     const image = RawImage.fromCanvas(analysisCanvas);
-    const { pixel_values, original_sizes, reshaped_input_sizes } = await state.poseProcessor(image);
-    const { dets } = await state.poseModel({ input: pixel_values });
+    processed = await state.poseProcessor(image);
+    const { pixel_values, original_sizes, reshaped_input_sizes } = processed;
+    output = await state.poseModel({ input: pixel_values });
+    const { dets } = output;
     const detections = parsePoseDetections(
       dets.tolist()[0],
       original_sizes[0],
@@ -557,6 +570,8 @@ async function runPoseEstimation() {
   } catch (error) {
     console.error(error);
   } finally {
+    disposeModelArtifacts(output);
+    disposeModelArtifacts(processed);
     state.poseBusy = false;
   }
 }
@@ -809,6 +824,146 @@ function stopConfetti() {
   if (confettiCanvas) {
     confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
     confettiCanvas.classList.remove("active");
+  }
+}
+
+function scheduleModelRelease() {
+  cancelModelRelease();
+  state.modelReleaseTimerId = window.setTimeout(() => {
+    releaseRealtimeResources();
+  }, MODEL_IDLE_RELEASE_MS);
+}
+
+function cancelModelRelease() {
+  if (state.modelReleaseTimerId) {
+    clearTimeout(state.modelReleaseTimerId);
+    state.modelReleaseTimerId = null;
+  }
+}
+
+function handleVisibilityChange() {
+  if (document.hidden) {
+    pauseRealtimeForHiddenTab();
+  } else {
+    resumeRealtimeForVisibleTab();
+  }
+}
+
+function pauseRealtimeForHiddenTab() {
+  stopPoseLoop();
+  stopCamera();
+  releaseAnalysisCanvas();
+
+  if (quiz.classList.contains("hidden")) {
+    releaseRealtimeResources();
+  }
+}
+
+async function resumeRealtimeForVisibleTab() {
+  if (quiz.classList.contains("hidden") || state.manualFallback || !state.poseReady || state.stream) {
+    return;
+  }
+
+  try {
+    await ensureCamera();
+    if (state.acceptingAnswers) {
+      feedback.classList.add("hidden");
+      startPoseLoop();
+    }
+  } catch (error) {
+    showCameraFallback(error);
+  }
+}
+
+function releaseRealtimeResources() {
+  cancelModelRelease();
+  stopPoseLoop();
+  stopCamera();
+  releasePoseModel();
+  releaseAnalysisCanvas();
+  state.setupReady = false;
+  state.setupInProgress = false;
+  state.poseBusy = false;
+  state.trackedPerson = null;
+  state.missedDetections = 0;
+
+  if (!quiz.classList.contains("hidden")) {
+    state.manualFallback = true;
+    feedback.textContent = "Kamera pausiert: Antwort anklicken";
+    feedback.classList.remove("hidden");
+    return;
+  }
+
+  prepareButton.disabled = false;
+  prepareButton.textContent = "Kamera vorbereiten";
+  startButton.disabled = true;
+  if (state.config) {
+    cameraNote.textContent = "Kamera und Pose-Modell vor dem Start vorbereiten.";
+  }
+}
+
+function stopCamera() {
+  if (state.stream) {
+    for (const track of state.stream.getTracks()) {
+      track.stop();
+    }
+    state.stream = null;
+  }
+
+  video.pause();
+  video.removeAttribute("src");
+  video.srcObject = null;
+  video.load();
+  video.classList.remove("active");
+}
+
+function releasePoseModel() {
+  disposeModelArtifact(state.poseModel);
+  disposeModelArtifact(state.poseProcessor);
+  state.poseModel = null;
+  state.poseProcessor = null;
+  state.poseReady = false;
+}
+
+function releaseAnalysisCanvas() {
+  if (analysisCanvas.width || analysisCanvas.height) {
+    analysisContext.clearRect(0, 0, analysisCanvas.width, analysisCanvas.height);
+    analysisCanvas.width = 0;
+    analysisCanvas.height = 0;
+  }
+}
+
+function disposeModelArtifacts(value, seen = new WeakSet()) {
+  if (!value || typeof value !== "object" || seen.has(value)) {
+    return;
+  }
+
+  seen.add(value);
+  disposeModelArtifact(value);
+
+  if (ArrayBuffer.isView(value) || value instanceof ArrayBuffer) {
+    return;
+  }
+
+  let children = [];
+  try {
+    children = Object.values(value);
+  } catch {
+    return;
+  }
+
+  for (const child of children) {
+    disposeModelArtifacts(child, seen);
+  }
+}
+
+function disposeModelArtifact(value) {
+  if (value && typeof value.dispose === "function") {
+    try {
+      value.dispose();
+    } catch {
+      // Best-effort cleanup for tensors and runtime sessions owned by Transformers.js.
+    }
   }
 }
 
