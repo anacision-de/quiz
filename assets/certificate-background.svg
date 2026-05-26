@@ -1,106 +1,195 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1900" viewBox="0 0 1400 1900">
-  <defs>
-    <radialGradient id="coreGlow" cx="50%" cy="47%" r="60%">
-      <stop offset="0" stop-color="#073a55"/>
-      <stop offset=".58" stop-color="#031c31"/>
-      <stop offset="1" stop-color="#020b18"/>
-    </radialGradient>
-    <linearGradient id="gold" x1="0" x2="1">
-      <stop offset="0" stop-color="#ffe100"/>
-      <stop offset=".48" stop-color="#ffb400"/>
-      <stop offset="1" stop-color="#ffe870"/>
-    </linearGradient>
-    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <filter id="lineGlow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="2.2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <pattern id="microGrid" width="58" height="58" patternUnits="userSpaceOnUse">
-      <path d="M58 0H0V58" fill="none" stroke="#195069" stroke-width="1" opacity=".13"/>
-    </pattern>
-    <g id="node">
-      <circle r="5" fill="#ffc400" filter="url(#lineGlow)"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1400 1900" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <rect x="0" y="0" width="1400" height="1900" style="fill:url(#_Radial1);"/>
+    <g transform="matrix(22.022867,0,0,22.022867,-690.693594,209.988322)">
+        <path d="M95.721,90.38L95.841,89.471L85.702,79.238L85.417,78.95L82.382,75.887C82.382,75.887 86.905,45.851 84.344,35.059C84.551,35.159 84.75,35.189 84.902,35.059L85.909,34.554L86.08,34.726C86.08,34.726 94.25,30.709 91.486,25.529C87.01,17.139 80.809,16.135 80.809,16.135L80.495,16.135C80.537,16.023 82.947,9.566 81.487,6.058C79.802,2.007 77.734,2.713 76.958,3.17C76.127,2.761 74.652,2.636 72.24,4.184C69.098,6.2 68.771,12.33 68.823,15.505C62.046,12.415 48.04,8.074 36.875,18.088C21.56,31.824 6.367,34.984 6.367,34.984C6.367,34.984 16.611,33.176 27.028,44.109C37.445,55.042 39.08,54.784 39.08,54.784C39.08,54.784 40.027,39.116 50.616,30.593C56.03,26.236 60.961,23.144 64.498,21.156C62.27,23.582 60.307,26.396 60.346,27.967C60.421,30.997 68.581,34.923 68.581,34.923L68.775,34.731L69.792,35.241C69.877,35.314 69.979,35.328 70.087,35.317C67.669,46.08 75.47,76.853 75.47,76.853L79.951,81.352L80.251,81.653L90.473,91.916L90.589,91.028L82.364,80.766L82.087,80.421L78.85,76.382L78.767,69.04L79.397,76.305L83.587,79.918L83.9,80.188L95.72,90.381L95.721,90.38ZM83.239,21.776C85.316,23.239 88.853,26.565 88.61,28.373C88.224,31.247 84.871,33.512 84.871,33.512L84.853,33.667C84.853,33.667 84.385,33.297 83.779,33.058C83.749,32.966 83.722,32.871 83.691,32.78C83.691,32.78 82.943,29.365 83.56,25.259C83.962,22.581 82.951,22.048 83.239,21.777L83.239,21.776ZM70.699,33.107C70.68,33.196 70.67,33.245 70.67,33.245L70.674,33.247C70.659,33.29 70.648,33.334 70.633,33.377C70.179,33.638 69.977,33.753 69.977,33.753L69.827,33.693L69.96,33.561C69.96,33.561 69.943,33.549 69.909,33.526C69.843,33.48 69.715,33.391 69.54,33.267C69.279,33.081 68.913,32.819 68.498,32.51C68.083,32.201 67.617,31.846 67.156,31.476C67.002,31.353 66.849,31.228 66.698,31.102C65.792,30.349 64.973,29.576 64.672,29.034C64.572,28.853 64.54,28.643 64.563,28.413C64.591,28.126 64.71,27.807 64.875,27.479C64.934,27.362 64.997,27.246 65.068,27.127C65.311,26.721 65.613,26.312 65.925,25.933C66.389,25.369 66.867,24.873 67.174,24.57C67.241,24.503 67.301,24.446 67.35,24.399C67.448,24.305 67.505,24.253 67.505,24.253C67.715,24.097 68.037,23.821 68.348,23.559C68.659,23.297 68.959,23.05 69.126,22.954C69.522,22.845 69.87,23.12 70.163,23.611C70.808,24.691 71.192,26.811 71.26,28.163C71.272,28.409 71.272,28.673 71.263,28.946C71.207,30.587 70.811,32.573 70.699,33.106L70.699,33.107Z" style="fill-opacity:0.5;fill-rule:nonzero;"/>
     </g>
-  </defs>
-
-  <rect width="1400" height="1900" fill="url(#coreGlow)"/>
-  <rect width="1400" height="1900" fill="url(#microGrid)" opacity=".5"/>
-  <path d="M1010-40 1440 390v1580H439L-55 1477V63L58-49z" fill="none" stroke="#0f4965" stroke-width="2" opacity=".45"/>
-  <path d="M1045-8 1388 337v1514H423L28 1453V62L58 31h874z" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#lineGlow)"/>
-  <path d="M930-90 1488 468" stroke="url(#gold)" stroke-width="3" filter="url(#lineGlow)"/>
-  <path d="M-76 1442 435 1953" stroke="url(#gold)" stroke-width="3" filter="url(#lineGlow)"/>
-  <path d="M1018-22 1446 406v-138L1178-22zM-42 1512 373 1927H150L-42 1735z" fill="#0b2b43" opacity=".65"/>
-  <path d="M1090 154 1360 424" stroke="#ffc400" stroke-width="7" opacity=".9" filter="url(#softGlow)"/>
-  <path d="M70 1582 302 1814" stroke="#ffc400" stroke-width="7" opacity=".9" filter="url(#softGlow)"/>
-
-  <g fill="none" stroke="#caa100" stroke-width="2" opacity=".72">
-    <path d="M0 101H80l25-28h130"/><use href="#node" x="225" y="73"/>
-    <path d="M25 132h205l24 24h143"/><use href="#node" x="397" y="156"/>
-    <path d="M0 177h172l24-24h90l32 32h170"/><use href="#node" x="488" y="185"/>
-    <path d="M0 218h318"/><use href="#node" x="318" y="218"/>
-    <path d="M0 262h174l57 58"/><use href="#node" x="231" y="320"/>
-    <path d="M0 306h119l42 41h128"/><use href="#node" x="289" y="347"/>
-    <path d="M0 362h82"/><use href="#node" x="82" y="362"/>
-    <path d="M0 418h246l58-58h72"/><use href="#node" x="376" y="360"/>
-    <path d="M0 486h155"/><use href="#node" x="155" y="486"/>
-    <path d="M0 548h235"/><use href="#node" x="235" y="548"/>
-    <path d="M0 630h180l35-35h170"/><use href="#node" x="385" y="595"/>
-    <path d="M294 73h282"/><use href="#node" x="576" y="73"/>
-    <path d="M428 111h168l29 29h96l47-47h151"/><use href="#node" x="919" y="93"/>
-    <path d="M530 145h240l38-39h80"/><use href="#node" x="888" y="106"/>
-    <path d="M664 180h82l31-31h120"/><use href="#node" x="897" y="149"/>
-    <path d="M704 219h150"/><use href="#node" x="854" y="219"/>
-    <path d="M770 99h78"/><use href="#node" x="848" y="99"/>
-    <path d="M0 1658h320"/><use href="#node" x="320" y="1658"/>
-    <path d="M0 1698h215l35 35h135"/><use href="#node" x="385" y="1733"/>
-    <path d="M0 1755h124"/><use href="#node" x="124" y="1755"/>
-  </g>
-
-  <g fill="none" stroke="#caa100" stroke-width="2" opacity=".7">
-    <path d="M960 1304h212l38-36h190"/><use href="#node" x="1210" y="1268"/>
-    <path d="M1054 1354h143l34 34h169"/><use href="#node" x="1197" y="1354"/>
-    <path d="M1130 1412h270"/><use href="#node" x="1130" y="1412"/>
-    <path d="M1010 1468h130l58-58h98"/><use href="#node" x="1296" y="1410"/>
-    <path d="M1070 1518h330"/><use href="#node" x="1070" y="1518"/>
-    <path d="M880 1608h190l48-48h282"/><use href="#node" x="880" y="1608"/>
-    <path d="M770 1665h170l25-27h167l42 42h226"/><use href="#node" x="1132" y="1638"/>
-    <path d="M850 1730h274"/><use href="#node" x="1124" y="1730"/>
-    <path d="M755 1784h228l35-34h247"/><use href="#node" x="983" y="1784"/>
-    <path d="M1016 1834h262l42-42h80"/><use href="#node" x="1278" y="1834"/>
-  </g>
-
-  <g opacity=".5" fill="none" stroke="#caa100" stroke-width="1.5">
-    <path d="M250 870h214l18-18h164"/><use href="#node" x="335" y="870"/>
-    <path d="M232 910h128l34-34h250"/><use href="#node" x="395" y="876"/>
-    <path d="M236 948h260"/><use href="#node" x="496" y="948"/>
-    <path d="M900 870h250"/><use href="#node" x="1150" y="870"/>
-    <path d="M888 920h162l26-26h94"/><use href="#node" x="1076" y="894"/>
-    <path d="M945 960h230"/><use href="#node" x="1175" y="960"/>
-  </g>
-
-  <path d="M244 830h244l18 18h438l18-18h254l46 46v185l-48 48H963l-18-18H453l-18 18H244l-47-48V876z" fill="#031625" fill-opacity=".38" stroke="url(#gold)" stroke-width="4" filter="url(#lineGlow)"/>
-  <path d="M226 806h264l19 17h432l19-17h277l68 68v189l-66 70H958l-17-15H449l-17 15H222l-68-70V873z" fill="none" stroke="url(#gold)" stroke-width="4" filter="url(#lineGlow)"/>
-  <path d="M214 1090h982" stroke="#18533a" stroke-width="3" opacity=".65"/>
-
-  <g filter="url(#softGlow)">
-    <path d="M480 468h440" stroke="url(#gold)" stroke-width="4"/>
-    <path d="M438 773h520" stroke="url(#gold)" stroke-width="5"/>
-    <path d="M325 1172h196" stroke="url(#gold)" stroke-width="3"/>
-    <path d="M879 1172h196" stroke="url(#gold)" stroke-width="3"/>
-    <path d="M370 1500h660" stroke="url(#gold)" stroke-width="2"/>
-    <path d="M410 1668h580" stroke="url(#gold)" stroke-width="2"/>
-    <ellipse cx="700" cy="468" rx="65" ry="5" fill="#ffe100"/>
-    <ellipse cx="700" cy="773" rx="88" ry="7" fill="#ffe100"/>
-    <ellipse cx="994" cy="831" rx="34" ry="7" fill="#ffe100"/>
-    <ellipse cx="700" cy="1760" rx="64" ry="6" fill="#ffe100"/>
-  </g>
+    <path d="M1044,30L1386,337L1388,1851L423,1851L28,1453L28,62L58,31L1044,30Z" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:3px;"/>
+    <g transform="matrix(0.998635,-0.052233,0.052233,0.998635,36.576927,-50.620329)">
+        <path d="M1090,154L1310.735,370.354" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-opacity:0.9;stroke-width:7px;"/>
+    </g>
+    <path d="M70,1582L302,1814" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-opacity:0.9;stroke-width:7px;"/>
+    <g opacity="0.72">
+        <path d="M0,101L80,101L105,73L235,73" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g transform="matrix(1,0,0,1,235,73)">
+            <g id="node">
+                <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+            </g>
+        </g>
+        <path d="M25,132L230,132L254,156L397,156" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node1" serif:id="node" transform="matrix(1,0,0,1,397,156)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,177L172,177L196,153L286,153L318,185L488,185" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node2" serif:id="node" transform="matrix(1,0,0,1,488,185)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,218L318,218" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node3" serif:id="node" transform="matrix(1,0,0,1,318,218)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,262L174,262L231,320" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node4" serif:id="node" transform="matrix(1,0,0,1,231,320)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,306L119,306L161,347L289,347" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node5" serif:id="node" transform="matrix(1,0,0,1,289,347)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,362L82,362" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node6" serif:id="node" transform="matrix(1,0,0,1,82,362)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,418L246,418L304,360L376,360" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node7" serif:id="node" transform="matrix(1,0,0,1,376,360)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,486L155,486" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node8" serif:id="node" transform="matrix(1,0,0,1,155,486)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,548L235,548" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node9" serif:id="node" transform="matrix(1,0,0,1,235,548)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,630L180,630L215,595L385,595" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node10" serif:id="node" transform="matrix(1,0,0,1,385,595)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M294,73L576,73" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node11" serif:id="node" transform="matrix(1,0,0,1,576,73)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M428,111L596,111L625,140L721,140L768,93L919,93" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node12" serif:id="node" transform="matrix(1,0,0,1,919,93)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M530,145L770,145L808,106L888,106" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node13" serif:id="node" transform="matrix(1,0,0,1,888,106)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M664,180L746,180L777,149L897,149" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node14" serif:id="node" transform="matrix(1,0,0,1,897,149)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M704,219L854,219" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node15" serif:id="node" transform="matrix(1,0,0,1,854,219)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M770,99L848,99" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node16" serif:id="node" transform="matrix(1,0,0,1,848,99)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,1658L320,1658" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node17" serif:id="node" transform="matrix(1,0,0,1,320,1658)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,1698L215,1698L250,1733L385,1733" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node18" serif:id="node" transform="matrix(1,0,0,1,385,1733)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M0,1755L124,1755" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node19" serif:id="node" transform="matrix(1,0,0,1,124,1755)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+    </g>
+    <g opacity="0.7">
+        <path d="M960,1304L1172,1304L1210,1268L1400,1268" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node20" serif:id="node" transform="matrix(1,0,0,1,960,1304)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M1054,1354L1197,1354L1231,1388L1400,1388" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node21" serif:id="node" transform="matrix(1,0,0,1,1054,1354)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M1130,1412L1400,1412" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node22" serif:id="node" transform="matrix(1,0,0,1,1130,1412)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,0,10)">
+            <path d="M1010,1468L1140,1468L1198,1410L1420,1410" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,1010,1478)">
+            <g id="node23" serif:id="node">
+                <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+            </g>
+        </g>
+        <path d="M1070,1518L1400,1518" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node24" serif:id="node" transform="matrix(1,0,0,1,1070,1518)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M880,1608L1070,1608L1118,1560L1400,1560" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node25" serif:id="node" transform="matrix(1,0,0,1,880,1608)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M770,1665L940,1665L965,1638L1132,1638L1174,1680L1400,1680" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g transform="matrix(1,0,0,1,770,1664)">
+            <g id="node26" serif:id="node">
+                <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+            </g>
+        </g>
+        <path d="M850,1730L1124,1730" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g id="node27" serif:id="node" transform="matrix(1,0,0,1,1124,1730)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+        </g>
+        <path d="M755,1784L983,1784L1018,1750L1265,1750" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g transform="matrix(1,0,0,1,750,1784)">
+            <g id="node28" serif:id="node">
+                <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+            </g>
+        </g>
+        <path d="M1016,1834L1278,1834L1320,1792L1400,1792" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:2px;"/>
+        <g transform="matrix(1,0,0,1,1016,1834)">
+            <g id="node29" serif:id="node">
+                <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:2px;"/>
+            </g>
+        </g>
+    </g>
+    <g opacity="0.5">
+        <path d="M250,870L464,870L482,852L646,852" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        <g id="node30" serif:id="node" transform="matrix(1,0,0,1,649,852)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        </g>
+        <path d="M232,910L360,910L394,876L644,876" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        <g id="node31" serif:id="node" transform="matrix(1,0,0,1,232,910)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        </g>
+        <path d="M236,948L496,948" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        <g id="node32" serif:id="node" transform="matrix(1,0,0,1,496,948)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        </g>
+        <path d="M900,870L1150,870" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        <g id="node33" serif:id="node" transform="matrix(1,0,0,1,1150,870)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        </g>
+        <path d="M888,920L1050,920L1076,894L1170,894" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        <g id="node34" serif:id="node" transform="matrix(1,0,0,1,888,920)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        </g>
+        <path d="M945,960L1175,960" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        <g id="node35" serif:id="node" transform="matrix(1,0,0,1,1175,960)">
+            <circle cx="0" cy="0" r="5" style="fill:rgb(253,230,2);stroke:rgb(253,230,2);stroke-width:1.5px;"/>
+        </g>
+    </g>
+    <g transform="matrix(1,0,0,1,-29.5,-2)">
+        <path d="M244,830L488,830L506,848L944,848L962,830L1216,830L1262,876L1262,1061L1214,1109L963,1109L945,1091L513,1091L495,1109L244,1109L197,1061L197,876L244,830Z" style="fill:rgb(3,22,37);fill-opacity:0.38;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:4px;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,-29.5,-2)">
+        <path d="M226,806L490,806L509,823L941,823L960,806L1237,806L1305,874L1305,1063L1239,1133L958,1133L941,1118L519,1118L502,1133L222,1133L154,1063L154,873L226,806Z" style="fill:none;fill-rule:nonzero;stroke:rgb(253,230,2);stroke-width:4px;"/>
+    </g>
+    <g>
+        <g transform="matrix(2.492308,0,0,0.5,-1044.615385,236.5)">
+            <ellipse cx="700" cy="468" rx="65" ry="5" style="fill:rgb(253,230,2);"/>
+        </g>
+        <g transform="matrix(2.492308,0,0,0.5,-1044.615385,542.201308)">
+            <ellipse cx="700" cy="468" rx="65" ry="5" style="fill:rgb(253,230,2);"/>
+        </g>
+        <g transform="matrix(1,0,0,0.416667,0,1030.166667)">
+            <ellipse cx="700" cy="1760" rx="64" ry="6" style="fill:rgb(253,230,2);"/>
+        </g>
+    </g>
+    <defs>
+        <radialGradient id="_Radial1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1140,0,0,1140,700,893)"><stop offset="0" style="stop-color:rgb(7,58,85);stop-opacity:1"/><stop offset="0.58" style="stop-color:rgb(3,28,49);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(2,11,24);stop-opacity:1"/></radialGradient>
+    </defs>
 </svg>

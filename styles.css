@@ -24,8 +24,8 @@
 
 :root {
   --brand-ink: #333646;
-  --brand-yellow: #ffdd00;
-  --brand-yellow-soft: #fff5b8;
+  --brand-yellow: #fde602;
+  --brand-yellow-soft: #fff8b0;
   --brand-surface: #fffdf2;
   --brand-line: #252836;
   --ink: var(--brand-ink);
@@ -56,7 +56,7 @@ body {
 body {
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(255, 221, 0, 0.18), rgba(51, 54, 70, 0.06)),
+    linear-gradient(135deg, rgba(253, 230, 2, 0.18), rgba(51, 54, 70, 0.06)),
     var(--surface);
   color: var(--ink);
   font-family: Lato, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -93,7 +93,7 @@ button {
 
 .intro {
   background:
-    radial-gradient(circle at 18% 16%, rgba(255, 221, 0, 0.2), transparent 28%),
+    radial-gradient(circle at 18% 16%, rgba(253, 230, 2, 0.2), transparent 28%),
     linear-gradient(145deg, #333646 0%, #252836 100%);
   color: white;
 }
@@ -476,7 +476,7 @@ button {
   min-height: 100vh;
   padding: clamp(24px, 5vw, 72px);
   background:
-    linear-gradient(135deg, rgba(255, 221, 0, 0.2), rgba(51, 54, 70, 0.08)),
+    linear-gradient(135deg, rgba(253, 230, 2, 0.2), rgba(51, 54, 70, 0.08)),
     var(--brand-surface);
 }
 

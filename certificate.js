@@ -10,6 +10,29 @@ const context = canvas.getContext("2d");
 const params = new URLSearchParams(window.location.search);
 const CATALOG_MANIFEST_PATH = "catalogs/catalogs.json";
 const CERTIFICATE_BACKGROUND_PATH = "assets/certificate-background.svg";
+const CERTIFICATE_ACCENT_COLOR = "#FDE602";
+const CERTIFICATE_ACCENT_DARK = "#C8B600";
+const CERTIFICATE_ACCENT_LIGHT = "#FFF9A8";
+const CERTIFICATE_ACCENT_RGB = "253, 230, 2";
+const RESULT_PANEL_BOUNDS = { x: 167.5, y: 828, width: 1065, height: 279 };
+const RESULT_PANEL_POINTS = [
+  [214.5, 828],
+  [458.5, 828],
+  [476.5, 846],
+  [914.5, 846],
+  [932.5, 828],
+  [1186.5, 828],
+  [1232.5, 874],
+  [1232.5, 1059],
+  [1184.5, 1107],
+  [933.5, 1107],
+  [915.5, 1089],
+  [483.5, 1089],
+  [465.5, 1107],
+  [214.5, 1107],
+  [167.5, 1059],
+  [167.5, 874],
+];
 const score = Math.max(0, Number(params.get("score") || 0));
 const catalogId = params.get("catalog")?.trim() || "";
 let maximumScore = 0;
@@ -104,7 +127,7 @@ async function renderCertificate(name) {
   const width = 1400;
   const height = 1900;
   const date = new Intl.DateTimeFormat("de-DE", { dateStyle: "long" }).format(new Date());
-  const resultBox = { x: 244, y: 830, width: 972, height: 279 };
+  const resultBox = RESULT_PANEL_BOUNDS;
   const resultColor = scoring?.color || "#0b642c";
 
   canvas.width = width;
@@ -113,12 +136,15 @@ async function renderCertificate(name) {
 
   context.textAlign = "center";
   context.textBaseline = "alphabetic";
-  context.shadowColor = "rgba(255, 194, 0, 0.38)";
+  context.shadowColor = `rgba(${CERTIFICATE_ACCENT_RGB}, 0.38)`;
   context.shadowBlur = 16;
   const titleGradient = context.createLinearGradient(410, 190, 990, 190);
-  titleGradient.addColorStop(0, "#ffb000");
-  titleGradient.addColorStop(0.5, "#ffe24a");
-  titleGradient.addColorStop(1, "#ffb000");
+  titleGradient.addColorStop(0, CERTIFICATE_ACCENT_DARK);
+  titleGradient.addColorStop(0.18, CERTIFICATE_ACCENT_COLOR);
+  titleGradient.addColorStop(0.42, CERTIFICATE_ACCENT_LIGHT);
+  titleGradient.addColorStop(0.58, CERTIFICATE_ACCENT_COLOR);
+  titleGradient.addColorStop(0.78, "#D6C400");
+  titleGradient.addColorStop(1, CERTIFICATE_ACCENT_LIGHT);
   context.fillStyle = titleGradient;
   context.font = "900 138px Lato, sans-serif";
   context.fillText("URKUNDE", width / 2, 355);
@@ -137,8 +163,7 @@ async function renderCertificate(name) {
   context.shadowColor = "rgba(0, 0, 0, 0.62)";
   context.shadowBlur = 10;
   context.fillStyle = "#ffffff";
-  context.font = `900 ${fitFontSize(context, name, 122, 860, "900")}px Lato, sans-serif`;
-  drawTextBlock(context, name, width / 2, 715, 1060, 118, 2);
+  drawCertificateName(context, name, width / 2);
 
   drawResultPanel(context, resultBox, resultColor);
 
@@ -175,7 +200,7 @@ async function renderCertificate(name) {
   context.fillStyle = "#ffffff";
   context.font = "400 34px Lato, sans-serif";
   context.fillText("Ausgestellt am", 675, 1574);
-  context.fillStyle = "#ffdd00";
+  context.fillStyle = CERTIFICATE_ACCENT_COLOR;
   context.font = "900 36px Lato, sans-serif";
   context.fillText(date, 675, 1628);
 
@@ -213,7 +238,7 @@ async function drawCertificateBackground(drawContext, width, height) {
   } catch {
     drawContext.fillStyle = "#031c31";
     drawContext.fillRect(0, 0, width, height);
-    drawContext.strokeStyle = "#ffdd00";
+    drawContext.strokeStyle = CERTIFICATE_ACCENT_COLOR;
     drawContext.lineWidth = 4;
     drawContext.strokeRect(32, 32, width - 64, height - 64);
   }
@@ -238,37 +263,19 @@ function drawResultPanel(drawContext, box, color) {
   gradient.addColorStop(0.5, color);
   gradient.addColorStop(1, mixColor(color, "#001521", 0.52));
 
-  drawContext.globalAlpha = 0.86;
+  drawContext.globalAlpha = 0.74;
   drawContext.fillStyle = gradient;
-  angularPanelPath(drawContext, box.x, box.y, box.width, box.height);
+  tracePath(drawContext, RESULT_PANEL_POINTS);
   drawContext.fill();
-
-  drawContext.globalAlpha = 0.22;
-  drawContext.fillStyle = "#ffffff";
-  drawContext.fillRect(box.x + 78, box.y + 26, box.width - 156, 3);
-  drawContext.globalAlpha = 1;
   drawContext.restore();
 }
 
-function angularPanelPath(drawContext, x, y, width, height) {
-  const notch = 46;
+function tracePath(drawContext, points) {
   drawContext.beginPath();
-  drawContext.moveTo(x + notch, y);
-  drawContext.lineTo(x + width * 0.29, y);
-  drawContext.lineTo(x + width * 0.31, y + 18);
-  drawContext.lineTo(x + width * 0.72, y + 18);
-  drawContext.lineTo(x + width * 0.74, y);
-  drawContext.lineTo(x + width - notch, y);
-  drawContext.lineTo(x + width, y + notch);
-  drawContext.lineTo(x + width, y + height - notch);
-  drawContext.lineTo(x + width - notch, y + height);
-  drawContext.lineTo(x + width * 0.74, y + height);
-  drawContext.lineTo(x + width * 0.72, y + height - 18);
-  drawContext.lineTo(x + width * 0.28, y + height - 18);
-  drawContext.lineTo(x + width * 0.26, y + height);
-  drawContext.lineTo(x + notch, y + height);
-  drawContext.lineTo(x, y + height - notch);
-  drawContext.lineTo(x, y + notch);
+  drawContext.moveTo(points[0][0], points[0][1]);
+  for (const [x, y] of points.slice(1)) {
+    drawContext.lineTo(x, y);
+  }
   drawContext.closePath();
 }
 
@@ -308,6 +315,20 @@ function drawCenteredTextBlock(drawContext, text, x, boxY, boxHeight, maxWidth, 
   }
 }
 
+function drawCertificateName(drawContext, name, x) {
+  const maxWidth = 1120;
+  const singleLineSize = fitSingleLineFontSize(drawContext, name, 122, maxWidth, "900", 62);
+
+  drawContext.font = `900 ${singleLineSize}px Lato, sans-serif`;
+  if (drawContext.measureText(name).width <= maxWidth) {
+    drawContext.fillText(name, x, 715);
+    return;
+  }
+
+  drawContext.font = "900 62px Lato, sans-serif";
+  drawCenteredTextBlock(drawContext, name, x, 620, 170, maxWidth, 70, 2);
+}
+
 function wrapText(drawContext, text, maxWidth) {
   const words = String(text || "").split(/\s+/).filter(Boolean);
   const lines = [];
@@ -344,16 +365,28 @@ function fitFontSize(drawContext, text, initialSize, maxWidth, weight = "900", m
   return minSize;
 }
 
+function fitSingleLineFontSize(drawContext, text, initialSize, maxWidth, weight = "900", minSize = 44) {
+  let size = initialSize;
+  while (size > minSize) {
+    drawContext.font = `${weight} ${size}px Lato, sans-serif`;
+    if (drawContext.measureText(text).width <= maxWidth) {
+      return size;
+    }
+    size -= 2;
+  }
+  return minSize;
+}
+
 function drawStars(drawContext, centerX, centerY, earned, total) {
   const starCount = Math.max(1, Math.min(total || 5, 5));
   const gap = 70;
   const startX = centerX - ((starCount - 1) * gap) / 2;
 
   drawContext.save();
-  drawContext.shadowColor = "rgba(255, 210, 0, 0.6)";
+  drawContext.shadowColor = `rgba(${CERTIFICATE_ACCENT_RGB}, 0.6)`;
   drawContext.shadowBlur = 8;
   for (let index = 0; index < starCount; index += 1) {
-    drawContext.fillStyle = index < earned ? "#ffc400" : "rgba(255, 255, 255, 0.24)";
+    drawContext.fillStyle = index < earned ? CERTIFICATE_ACCENT_COLOR : "rgba(255, 255, 255, 0.24)";
     drawStar(drawContext, startX + index * gap, centerY, 24, 10, 5);
   }
   drawContext.restore();
@@ -378,9 +411,9 @@ function drawStar(drawContext, x, y, outerRadius, innerRadius, points) {
 
 function drawDateIcon(drawContext, x, y) {
   drawContext.save();
-  drawContext.strokeStyle = "#ffdd00";
+  drawContext.strokeStyle = CERTIFICATE_ACCENT_COLOR;
   drawContext.lineWidth = 5;
-  drawContext.shadowColor = "rgba(255, 221, 0, 0.45)";
+  drawContext.shadowColor = `rgba(${CERTIFICATE_ACCENT_RGB}, 0.45)`;
   drawContext.shadowBlur = 8;
   drawContext.beginPath();
   drawContext.arc(x, y, 62, 0, Math.PI * 2);
@@ -397,7 +430,7 @@ function drawDateIcon(drawContext, x, y) {
   drawContext.lineTo(x + 16, y - 14);
   drawContext.stroke();
 
-  drawContext.fillStyle = "#ffdd00";
+  drawContext.fillStyle = CERTIFICATE_ACCENT_COLOR;
   for (const dotY of [4, 18]) {
     for (const dotX of [-16, 0, 16]) {
       drawContext.fillRect(x + dotX - 3, y + dotY - 3, 6, 6);
