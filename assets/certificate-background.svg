@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1900" viewBox="0 0 1400 1900">
+  <defs>
+    <radialGradient id="coreGlow" cx="50%" cy="47%" r="60%">
+      <stop offset="0" stop-color="#073a55"/>
+      <stop offset=".58" stop-color="#031c31"/>
+      <stop offset="1" stop-color="#020b18"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#ffe100"/>
+      <stop offset=".48" stop-color="#ffb400"/>
+      <stop offset="1" stop-color="#ffe870"/>
+    </linearGradient>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="lineGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="microGrid" width="58" height="58" patternUnits="userSpaceOnUse">
+      <path d="M58 0H0V58" fill="none" stroke="#195069" stroke-width="1" opacity=".13"/>
+    </pattern>
+    <g id="node">
+      <circle r="5" fill="#ffc400" filter="url(#lineGlow)"/>
+    </g>
+  </defs>
+
+  <rect width="1400" height="1900" fill="url(#coreGlow)"/>
+  <rect width="1400" height="1900" fill="url(#microGrid)" opacity=".5"/>
+  <path d="M1010-40 1440 390v1580H439L-55 1477V63L58-49z" fill="none" stroke="#0f4965" stroke-width="2" opacity=".45"/>
+  <path d="M1045-8 1388 337v1514H423L28 1453V62L58 31h874z" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#lineGlow)"/>
+  <path d="M930-90 1488 468" stroke="url(#gold)" stroke-width="3" filter="url(#lineGlow)"/>
+  <path d="M-76 1442 435 1953" stroke="url(#gold)" stroke-width="3" filter="url(#lineGlow)"/>
+  <path d="M1018-22 1446 406v-138L1178-22zM-42 1512 373 1927H150L-42 1735z" fill="#0b2b43" opacity=".65"/>
+  <path d="M1090 154 1360 424" stroke="#ffc400" stroke-width="7" opacity=".9" filter="url(#softGlow)"/>
+  <path d="M70 1582 302 1814" stroke="#ffc400" stroke-width="7" opacity=".9" filter="url(#softGlow)"/>
+
+  <g fill="none" stroke="#caa100" stroke-width="2" opacity=".72">
+    <path d="M0 101H80l25-28h130"/><use href="#node" x="225" y="73"/>
+    <path d="M25 132h205l24 24h143"/><use href="#node" x="397" y="156"/>
+    <path d="M0 177h172l24-24h90l32 32h170"/><use href="#node" x="488" y="185"/>
+    <path d="M0 218h318"/><use href="#node" x="318" y="218"/>
+    <path d="M0 262h174l57 58"/><use href="#node" x="231" y="320"/>
+    <path d="M0 306h119l42 41h128"/><use href="#node" x="289" y="347"/>
+    <path d="M0 362h82"/><use href="#node" x="82" y="362"/>
+    <path d="M0 418h246l58-58h72"/><use href="#node" x="376" y="360"/>
+    <path d="M0 486h155"/><use href="#node" x="155" y="486"/>
+    <path d="M0 548h235"/><use href="#node" x="235" y="548"/>
+    <path d="M0 630h180l35-35h170"/><use href="#node" x="385" y="595"/>
+    <path d="M294 73h282"/><use href="#node" x="576" y="73"/>
+    <path d="M428 111h168l29 29h96l47-47h151"/><use href="#node" x="919" y="93"/>
+    <path d="M530 145h240l38-39h80"/><use href="#node" x="888" y="106"/>
+    <path d="M664 180h82l31-31h120"/><use href="#node" x="897" y="149"/>
+    <path d="M704 219h150"/><use href="#node" x="854" y="219"/>
+    <path d="M770 99h78"/><use href="#node" x="848" y="99"/>
+    <path d="M0 1658h320"/><use href="#node" x="320" y="1658"/>
+    <path d="M0 1698h215l35 35h135"/><use href="#node" x="385" y="1733"/>
+    <path d="M0 1755h124"/><use href="#node" x="124" y="1755"/>
+  </g>
+
+  <g fill="none" stroke="#caa100" stroke-width="2" opacity=".7">
+    <path d="M960 1304h212l38-36h190"/><use href="#node" x="1210" y="1268"/>
+    <path d="M1054 1354h143l34 34h169"/><use href="#node" x="1197" y="1354"/>
+    <path d="M1130 1412h270"/><use href="#node" x="1130" y="1412"/>
+    <path d="M1010 1468h130l58-58h98"/><use href="#node" x="1296" y="1410"/>
+    <path d="M1070 1518h330"/><use href="#node" x="1070" y="1518"/>
+    <path d="M880 1608h190l48-48h282"/><use href="#node" x="880" y="1608"/>
+    <path d="M770 1665h170l25-27h167l42 42h226"/><use href="#node" x="1132" y="1638"/>
+    <path d="M850 1730h274"/><use href="#node" x="1124" y="1730"/>
+    <path d="M755 1784h228l35-34h247"/><use href="#node" x="983" y="1784"/>
+    <path d="M1016 1834h262l42-42h80"/><use href="#node" x="1278" y="1834"/>
+  </g>
+
+  <g opacity=".5" fill="none" stroke="#caa100" stroke-width="1.5">
+    <path d="M250 870h214l18-18h164"/><use href="#node" x="335" y="870"/>
+    <path d="M232 910h128l34-34h250"/><use href="#node" x="395" y="876"/>
+    <path d="M236 948h260"/><use href="#node" x="496" y="948"/>
+    <path d="M900 870h250"/><use href="#node" x="1150" y="870"/>
+    <path d="M888 920h162l26-26h94"/><use href="#node" x="1076" y="894"/>
+    <path d="M945 960h230"/><use href="#node" x="1175" y="960"/>
+  </g>
+
+  <path d="M244 830h244l18 18h438l18-18h254l46 46v185l-48 48H963l-18-18H453l-18 18H244l-47-48V876z" fill="#031625" fill-opacity=".38" stroke="url(#gold)" stroke-width="4" filter="url(#lineGlow)"/>
+  <path d="M226 806h264l19 17h432l19-17h277l68 68v189l-66 70H958l-17-15H449l-17 15H222l-68-70V873z" fill="none" stroke="url(#gold)" stroke-width="4" filter="url(#lineGlow)"/>
+  <path d="M214 1090h982" stroke="#18533a" stroke-width="3" opacity=".65"/>
+
+  <g filter="url(#softGlow)">
+    <path d="M480 468h440" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M438 773h520" stroke="url(#gold)" stroke-width="5"/>
+    <path d="M325 1172h196" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M879 1172h196" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M370 1500h660" stroke="url(#gold)" stroke-width="2"/>
+    <path d="M410 1668h580" stroke="url(#gold)" stroke-width="2"/>
+    <ellipse cx="700" cy="468" rx="65" ry="5" fill="#ffe100"/>
+    <ellipse cx="700" cy="773" rx="88" ry="7" fill="#ffe100"/>
+    <ellipse cx="994" cy="831" rx="34" ry="7" fill="#ffe100"/>
+    <ellipse cx="700" cy="1760" rx="64" ry="6" fill="#ffe100"/>
+  </g>
+</svg>
